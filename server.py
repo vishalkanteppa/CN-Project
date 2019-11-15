@@ -14,6 +14,15 @@ a["21 jump street"] = [[0 for i in range(10)] for j in range(5)]
 a["the departed"] = [[0 for i in range(10)] for j in range(5)]
 a["shutter island"] = [[0 for i in range(10)] for j in range(5)]
 
+for m in a:
+    q=0
+    # print(m)
+    for i in range(5):
+        for j in range(10):
+            q+=1
+            a[m][i][j]=q
+
+print(a['avengers'][3][9])
 tcpSerSock = socket(AF_INET, SOCK_STREAM)
 tcpSerSock.bind(ADDR)
 tcpSerSock.listen(5)
@@ -36,14 +45,15 @@ while True:
     r = arr[1]
     c = arr[2]
     n = arr[3]
+    s=arr[4]
 
     if n.lower() == "exit":
         break
 
-    if a[n][r][c] == 1 and r != -1:
+    if a[n][r][c] == 'X' and r != -1:
         check = False
-    elif a[n][r][c] == 0 and r != -1:
-        a[n][r][c] = 1
+    elif a[n][r][c] == s and r != -1:
+        a[n][r][c] = 'X'
         check = True
 
 tcpCliSock.close()

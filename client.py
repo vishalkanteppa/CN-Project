@@ -53,18 +53,21 @@ def sen(s, a, name):
         return 0
 
     if seat != -1:
-        row = int(seat / 10)
+        row = int(seat / 10) if int(seat % 10) != 0 else int(seat / 11)
         col = (seat % 10) - 1
+        if seat % 10 == 0:
+            col = 9
     else:
         row = -1
         col = -1
     a = pickle.dumps(a)
-    arr = [a, row, col, name]
+    arr = [a, row, col, name, seat]
     # print(arr)
     tcpCliSock.send(pickle.dumps(arr))
     return 1
 
-t=1
+
+t = 1
 decide = -1
 a, check = rec()
 name = "avengers"
@@ -76,12 +79,12 @@ while True:
         sen(-1, a, name)
         a, check = rec()
 
-        if t==1:
+        if t == 1:
             print('Type "logout" to logout and "exit" to exit.\n')
-            t=0
+            t = 0
 
         if decide == 1:
-            name = input("Enter movie name. \n")
+            name = input("Which movie would you like to watch? \n")
 
             if name.lower() == "logout":
                 login = False
@@ -97,11 +100,30 @@ while True:
                 continue
 
             if check == True:
-                for i in a[name]:
-                    for j in i:
-                        print(j, end="    ")
+                space = -1
+                for i in range(5):
+                    for j in range(10):
+                        space += 1
+                        if space == 4:
+                            if type(a[name][i][j]) == str:
+                                print("    {0:>5}".format(a[name][i][j]), end="")
+                            else:
+                                print("    {0:5}".format(a[name][i][j]), end="")
+                            space = -1
+                        elif space == 3:
+                            if type(a[name][i][j]) == str:
+                                print("    {0:>5}".format(a[name][i][j]), end="")
+                            else:
+                                print("    {0:5}".format(a[name][i][j]), end="")
+                            space = -1
+                        else:
+                            if type(a[name][i][j]) == str:
+                                print("{0:>5}".format(a[name][i][j]), end="")
+                            else:
+                                print("{0:5}".format(a[name][i][j]), end="")
+                    space = -1
                     print()
-                print()
+
             s = input("Enter seat you wish to sit in. ")
 
             flag = sen(s, a, name)
@@ -141,18 +163,10 @@ while True:
             elif uname in user:
                 pswd = getpass("Paswword: ")
                 if user[uname] == pswd:
-                    print("Login Successful!")
-                    login = True
-                    continue
-                else:
-                    print("User already exists. \n")
-            else:
-                pswd = getpass("Password: ")
-                if user[uname] == pswd:
                     print("Login Successful!\n")
                     login = True
                     continue
                 else:
-                    print("Incorrect Password.")
+                    print("User already exists. Please try snother username.\n") 
 
 tcpCliSock.close()
