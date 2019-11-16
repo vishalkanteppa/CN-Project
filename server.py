@@ -22,21 +22,18 @@ for m in a:
             q+=1
             a[m][i][j]=q
 
-print(a['avengers'][3][9])
 tcpSerSock = socket(AF_INET, SOCK_STREAM)
 tcpSerSock.bind(ADDR)
 tcpSerSock.listen(5)
 tcpCliSock, addr = tcpSerSock.accept()
-print("Connection established to:",addr,"\n")
+print("Connection established to:",addr,"\n\n")
 
 check = True
 i = 0
 while True:
     arr = [pickle.dumps(a), check]
     tcpCliSock.send(pickle.dumps(arr))
-    i += 1
-    # print(i)
-
+    
     data = tcpCliSock.recv(BUFSIZ)
     arr = pickle.loads(data)
     if not data:
@@ -55,6 +52,7 @@ while True:
     elif a[n][r][c] == s and r != -1:
         a[n][r][c] = 'X'
         check = True
+        print("Booking made on seat no. ",s," for ",n)
 
 tcpCliSock.close()
 tcpSerSock.close()

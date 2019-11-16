@@ -2,7 +2,7 @@ from socket import *
 import pickle
 from getpass import getpass
 
-HOST = "127.0.0.1"
+HOST = "192.168.43.209" #ip address of the system the server is runing on or 127.0.0.1 if on same system
 PORT = 21567
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
