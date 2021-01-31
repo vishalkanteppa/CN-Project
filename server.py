@@ -7,8 +7,7 @@ PORT = 21567
 BUFSIZ = 1024
 ADDR = (HOST, PORT)
 
-print("Dhruv pathak is here!")
-print("pandharicha raja")
+
 a = dict()
 a["jurassic park"] = [[0 for i in range(10)] for j in range(5)]
 a["avengers"] = [[0 for i in range(10)] for j in range(5)]
